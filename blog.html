@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG | DHABY.DEV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-concrete: #E6E6E6;
+            --text-rebar: #1A1A1A;
+            --safety-orange: #FF3300;
+            --beam-black: #000000;
+        }
+        body {
+            background-color: var(--bg-concrete);
+            color: var(--text-rebar);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+        .font-tech {
+            font-family: 'Space Mono', monospace;
+        }
+        /* The Grain - Analog Noise */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+        /* Border Utilities */
+        .border-beam { border: 2px solid var(--beam-black); }
+        .border-beam-b { border-bottom: 2px solid var(--beam-black); }
+        .border-beam-r { border-right: 2px solid var(--beam-black); }
+        .border-beam-t { border-top: 2px solid var(--beam-black); }
+        .border-beam-l { border-left: 2px solid var(--beam-black); }
+        
+        .tracking-tight-custom { letter-spacing: -0.04em; }
+        
+        /* Image Processing */
+        .brutalist-img {
+            filter: grayscale(100%) contrast(110%);
+            transition: filter 0.1s linear;
+        }
+        .brutalist-img:hover {
+            filter: grayscale(0%) contrast(100%);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--bg-concrete);
+            border-left: 1px solid black;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: black;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#FF3300] selection:text-white pb-0">
+
+    <!-- The Grain -->
+    <div class="noise-overlay"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#E6E6E6] z-40 hidden flex-col pt-24 pb-8 overflow-y-auto transform transition-transform duration-300">
+        <div class="flex flex-col font-tech text-xl uppercase divide-y-2 divide-black border-b-2 border-black">
+            <a href="index.html#work" class="mobile-link px-6 py-6 hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex justify-between items-center">
+                <span>[01] Projects</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </a>
+            <a href="index.html#about" class="mobile-link px-6 py-6 hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex justify-between items-center">
+                <span>[02] Bio / Stats</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </a>
+            <a href="index.html#stack" class="mobile-link px-6 py-6 hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex justify-between items-center">
+                <span>[03] Tech Stack</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </a>
+            <a href="blog.html" class="mobile-link px-6 py-6 bg-[#FF3300] text-white transition-colors duration-0 flex justify-between items-center">
+                <span>[04] Blog</span>
+                <iconify-icon icon="solar:document-bold-linear"></iconify-icon>
+            </a>
+        </div>
+        <div class="mt-auto px-6 pt-8">
+            <p class="font-tech text-xs uppercase text-gray-500">System Status: Online</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#E6E6E6] border-beam-b">
+        <div class="flex flex-col lg:flex-row justify-between lg:items-stretch h-auto lg:h-20">
+            <!-- Left: ID -->
+            <div class="flex items-center justify-between p-4 lg:p-0 lg:w-1/4 lg:border-beam-r bg-[#E6E6E6] relative z-50">
+                <a href="index.html" class="block pl-2 lg:pl-6 group">
+                    <span class="text-2xl lg:text-4xl uppercase group-hover:text-[#FF3300] transition-colors duration-0 font-bold tracking-tight-custom">ABYSOFT</span>
+                </a>
+                <button id="menu-toggle" class="lg:hidden p-2 border-beam bg-white active:bg-black active:text-white transition-colors">
+                    <iconify-icon id="menu-icon" icon="solar:hamburger-menu-linear" width="24" height="24"></iconify-icon>
+                </button>
+            </div>
+
+            <!-- Right: Links (Desktop) -->
+            <div class="hidden lg:flex flex-1 justify-end items-center font-tech text-xs tracking-widest uppercase divide-x-2 divide-black">
+                <a href="index.html#work" class="h-full flex items-center px-8 hover:bg-black hover:text-white transition-colors duration-0 border-l-2 border-black">
+                    [01] Projects
+                </a>
+                <a href="index.html#about" class="h-full flex items-center px-8 hover:bg-black hover:text-white transition-colors duration-0">
+                    [02] Bio / Stats
+                </a>
+                <a href="blog.html" class="h-full flex items-center px-8 bg-black text-white transition-colors duration-0">
+                    [04] Blog
+                </a>
+                <a href="index.html#contact" class="h-full flex items-center px-8 bg-[#FF3300] text-white hover:bg-black transition-colors duration-0 font-semibold border-l-2 border-black">
+                    <iconify-icon icon="solar:file-download-linear" width="16" height="16" class="mr-2"></iconify-icon> CV [PDF]
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="h-[74px] lg:h-20 w-full"></div>
+
+    <!-- Blog Hero -->
+    <section class="w-full border-beam-b bg-[#1A1A1A] py-16 lg:py-24 px-6 lg:px-10">
+        <div class="container mx-auto">
+            <div class="font-tech text-xs text-[#FF3300] mb-4 uppercase tracking-widest flex items-center gap-2">
+                <iconify-icon icon="solar:document-text-linear" width="14"></iconify-icon> System Log: Articles
+            </div>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl text-white font-bold uppercase tracking-tight-custom leading-[0.85]">
+                Catatan &<br>Insight.
+            </h1>
+            <div class="w-24 h-3 bg-[#FF3300] mt-8"></div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="w-full bg-white">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-black">
+            
+            <!-- Article Card 1 -->
+            <article class="flex flex-col border-b-2 lg:border-b-2 border-black hover:bg-[#E6E6E6] transition-colors duration-0 group">
+                <div class="h-64 overflow-hidden border-beam-b">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop" alt="Article Thumbnail" class="w-full h-full object-cover brutalist-img">
+                </div>
+                <div class="p-6 lg:p-8 flex-1 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-tech text-[10px] uppercase bg-black text-white px-2 py-1">Code / Architecture</span>
+                        <span class="font-tech text-[10px] uppercase text-gray-500">23 FEB 2026</span>
+                    </div>
+                    <h2 class="text-2xl lg:text-3xl font-bold uppercase tracking-tight mb-4 group-hover:text-[#FF3300] transition-colors">
+                        Optimasi Query Laravel untuk Transaksi Besar
+                    </h2>
+                    <p class="text-sm leading-relaxed opacity-80 mb-8 line-clamp-3">
+                        Bagaimana mengelola ribuan data transaksi tanpa membuat server database menjadi overload. Tips dan trik indexing serta penggunaan Eloquent yang efisien.
+                    </p>
+                    <div class="mt-auto">
+                        <a href="blog-detail.html" class="inline-flex items-center gap-2 font-tech text-xs uppercase font-bold border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-all">
+                            Read More <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article Card 2 -->
+            <article class="flex flex-col border-b-2 lg:border-b-2 border-black hover:bg-[#E6E6E6] transition-colors duration-0 group">
+                <div class="h-64 overflow-hidden border-beam-b">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop" alt="Article Thumbnail" class="w-full h-full object-cover brutalist-img">
+                </div>
+                <div class="p-6 lg:p-8 flex-1 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-tech text-[10px] uppercase bg-black text-white px-2 py-1">Frontend / UX</span>
+                        <span class="font-tech text-[10px] uppercase text-gray-500">15 FEB 2026</span>
+                    </div>
+                    <h2 class="text-2xl lg:text-3xl font-bold uppercase tracking-tight mb-4 group-hover:text-[#FF3300] transition-colors">
+                        Membangun Dashboard React yang Resilien
+                    </h2>
+                    <p class="text-sm leading-relaxed opacity-80 mb-8 line-clamp-3">
+                        Penerapan Error Boundaries dan state management yang robust untuk aplikasi dashboard dengan flow data yang kompleks.
+                    </p>
+                    <div class="mt-auto">
+                        <a href="blog-detail.html" class="inline-flex items-center gap-2 font-tech text-xs uppercase font-bold border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-all">
+                            Read More <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article Card 3 -->
+            <article class="flex flex-col border-b-2 lg:border-b-2 border-black hover:bg-[#E6E6E6] transition-colors duration-0 group">
+                <div class="h-64 overflow-hidden border-beam-b">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" alt="Article Thumbnail" class="w-full h-full object-cover brutalist-img">
+                </div>
+                <div class="p-6 lg:p-8 flex-1 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-tech text-[10px] uppercase bg-black text-white px-2 py-1">DevOps / API</span>
+                        <span class="font-tech text-[10px] uppercase text-gray-500">01 FEB 2026</span>
+                    </div>
+                    <h2 class="text-2xl lg:text-3xl font-bold uppercase tracking-tight mb-4 group-hover:text-[#FF3300] transition-colors">
+                        Integrasi Payment Gateway yang Aman
+                    </h2>
+                    <p class="text-sm leading-relaxed opacity-80 mb-8 line-clamp-3">
+                        Step-by-step implementasi callback, webhook, dan verifikasi checksum untuk memastikan transaksi financial berjalan 100% aman.
+                    </p>
+                    <div class="mt-auto">
+                        <a href="blog-detail.html" class="inline-flex items-center gap-2 font-tech text-xs uppercase font-bold border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-all">
+                            Read More <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Pagination / More -->
+    <div class="w-full border-beam-b p-10 bg-[#E6E6E6] flex justify-center">
+        <button class="font-tech text-sm uppercase font-bold border-beam bg-white px-8 py-4 hover:bg-[#FF3300] hover:text-white transition-colors flex items-center gap-3">
+            Load More Archives <iconify-icon icon="solar:refresh-linear" width="20"></iconify-icon>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-[#E6E6E6] w-full border-t-2 border-black" id="contact">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+            <div class="p-8 lg:p-16 border-b lg:border-b-0 lg:border-r border-[#333]">
+                <h2 class="text-5xl lg:text-6xl font-bold uppercase tracking-tight-custom leading-none mb-8">Let's<br>Connect.</h2>
+                <div class="space-y-4">
+                    <label class="font-tech text-xs uppercase tracking-widest text-gray-400">Direct Contact</label>
+                    <div class="flex flex-col gap-4">
+                        <a href="mailto:dhabyap@gmail.com" class="text-xl lg:text-2xl hover:text-[#FF3300] font-bold border-b border-[#333] pb-2 w-max break-all">dhabyap@gmail.com</a>
+                        <a href="tel:+6289656380397" class="text-lg lg:text-xl hover:text-[#FF3300] font-tech border-b border-[#333] pb-2 w-max">(+62) 896-5638-0397</a>
+                    </div>
+                </div>
+            </div>
+            <div class="p-8 lg:p-16 flex flex-col justify-between">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 lg:mb-16">
+                    <div>
+                        <h4 class="font-tech text-xs text-gray-400 uppercase mb-4">Location</h4>
+                        <p class="uppercase font-bold text-sm leading-relaxed">Bandung, Jawa Barat<br>Indonesia<br>GMT +7</p>
+                    </div>
+                    <div>
+                        <h4 class="font-tech text-xs text-gray-400 uppercase mb-4">Social</h4>
+                        <ul class="uppercase font-bold text-sm leading-relaxed space-y-2">
+                            <li><a href="#" class="hover:text-[#FF3300]">LinkedIn</a></li>
+                            <li><a href="#" class="hover:text-[#FF3300]">GitHub</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-[#333] font-tech text-[10px] uppercase text-gray-500 gap-2">
+                    <div>© 2024 DHABY ANGGIKA PUTRA.</div>
+                    <div class="flex items-center gap-1">POWERED BY <iconify-icon icon="solar:battery-charge-linear"></iconify-icon> CODEIGNITER & REACT</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                menuIcon.setAttribute('icon', 'solar:close-square-linear');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                document.body.style.overflow = '';
+                menuIcon.setAttribute('icon', 'solar:hamburger-menu-linear');
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => { link.addEventListener('click', toggleMenu); });
+    </script>
+</body>
+</html>

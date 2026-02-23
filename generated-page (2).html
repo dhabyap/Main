@@ -1,0 +1,507 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHABY.DEV | Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-concrete: #E6E6E6;
+            --text-rebar: #1A1A1A;
+            --safety-orange: #FF3300;
+            --beam-black: #000000;
+        }
+        body {
+            background-color: var(--bg-concrete);
+            color: var(--text-rebar);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+        .font-tech {
+            font-family: 'Space Mono', monospace;
+        }
+        /* The Grain - Analog Noise */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+        /* Border Utilities */
+        .border-beam { border: 2px solid var(--beam-black); }
+        .border-beam-b { border-bottom: 2px solid var(--beam-black); }
+        .border-beam-r { border-right: 2px solid var(--beam-black); }
+        .border-beam-t { border-top: 2px solid var(--beam-black); }
+        .border-beam-l { border-left: 2px solid var(--beam-black); }
+        
+        /* Responsive Borders */
+        @media (min-width: 1024px) {
+            .lg\:border-beam-r { border-right: 2px solid var(--beam-black); }
+            .lg\:border-b-0 { border-bottom: 0; }
+        }
+
+        .tracking-tight-custom { letter-spacing: -0.04em; }
+        
+        /* Image Processing */
+        .brutalist-img {
+            filter: grayscale(100%) contrast(110%);
+            transition: filter 0.1s linear;
+        }
+        .brutalist-img:hover {
+            filter: grayscale(0%) contrast(100%);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--bg-concrete);
+            border-left: 1px solid black;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: black;
+        }
+        
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 20s linear infinite;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#FF3300] selection:text-white pb-0">
+
+    <!-- The Grain -->
+    <div class="noise-overlay"></div>
+
+    <!-- Mobile Menu Overlay (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#E6E6E6] z-40 hidden flex-col pt-24 pb-8 overflow-y-auto transform transition-transform duration-300">
+        <div class="flex flex-col font-tech text-xl uppercase divide-y-2 divide-black border-b-2 border-black">
+            <a href="#work" class="mobile-link px-6 py-6 hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex justify-between items-center">
+                <span>[01] Projects</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </a>
+            <a href="#about" class="mobile-link px-6 py-6 hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex justify-between items-center">
+                <span>[02] Bio / Stats</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </a>
+            <a href="#stack" class="mobile-link px-6 py-6 hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex justify-between items-center">
+                <span>[03] Tech Stack</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </a>
+            <a href="#contact" class="mobile-link px-6 py-6 bg-black text-white hover:bg-[#FF3300] transition-colors duration-0 flex justify-between items-center">
+                <span>Download CV</span>
+                <iconify-icon icon="solar:file-download-linear"></iconify-icon>
+            </a>
+        </div>
+        <div class="mt-auto px-6 pt-8">
+            <p class="font-tech text-xs uppercase text-gray-500">System Status: Online</p>
+        </div>
+    </div>
+
+    <!-- A. Navigation: "The Header" -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#E6E6E6] border-beam-b">
+        <div class="flex flex-col lg:flex-row justify-between lg:items-stretch h-auto lg:h-20">
+            <!-- Left: ID -->
+            <div class="flex items-center justify-between p-4 lg:p-0 lg:w-1/4 lg:border-beam-r bg-[#E6E6E6] relative z-50">
+                <a href="#" class="block pl-2 lg:pl-6 group">
+                    <span class="text-2xl lg:text-4xl uppercase group-hover:text-[#FF3300] transition-colors duration-0 font-bold tracking-tight-custom">ABYSOFT</span>
+                </a>
+                <!-- Mobile Toggle Button -->
+                <button id="menu-toggle" class="lg:hidden p-2 border-beam bg-white active:bg-black active:text-white transition-colors">
+                    <iconify-icon id="menu-icon" icon="solar:hamburger-menu-linear" width="24" height="24"></iconify-icon>
+                </button>
+            </div>
+
+            <!-- Right: Links (Desktop) -->
+            <div class="hidden lg:flex flex-1 justify-end items-center font-tech text-xs tracking-widest uppercase divide-x-2 divide-black">
+                <a href="#work" class="h-full flex items-center px-8 hover:bg-black hover:text-white transition-colors duration-0 border-l-2 border-black">
+                    [01] Projects
+                </a>
+                <a href="#about" class="h-full flex items-center px-8 hover:bg-black hover:text-white transition-colors duration-0">
+                    [02] Bio / Stats
+                </a>
+                <a href="#stack" class="h-full flex items-center px-8 hover:bg-black hover:text-white transition-colors duration-0">
+                    [03] Tech Stack
+                </a>
+                <a href="#contact" class="h-full flex items-center px-8 bg-[#FF3300] text-white hover:bg-black transition-colors duration-0 font-semibold border-l-2 border-black">
+                    <iconify-icon icon="solar:file-download-linear" width="16" height="16" class="mr-2"></iconify-icon> CV [PDF]
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Spacer for Fixed Nav -->
+    <div class="h-[74px] lg:h-20 w-full"></div>
+
+    <!-- B. Hero Section: "The Interface" -->
+    <section class="w-full border-beam-b grid grid-cols-1 lg:grid-cols-12 min-h-[75vh] lg:min-h-[85vh]">
+        <!-- Left: The Visual -->
+        <div class="lg:col-span-8 border-beam-b lg:border-b-0 lg:border-beam-r relative overflow-hidden group order-1 h-[40vh] lg:h-auto">
+            <div class="absolute inset-0 bg-cover bg-center brutalist-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&amp;w=2070&amp;auto=format&amp;fit=crop');"></div>
+            
+            <!-- Metadata Overlay -->
+            <div class="absolute top-4 left-4 bg-white border-beam p-2 font-tech text-[10px] lg:text-xs z-10">
+                ROLE: WEB DEVELOPER // FULL-STACK
+            </div>
+
+            <!-- Glitch Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/80 to-transparent pointer-events-none"></div>
+        </div>
+
+        <!-- Right: The Introduction -->
+        <div class="lg:col-span-4 flex flex-col justify-between bg-[#E6E6E6] p-6 lg:p-10 relative order-2">
+            <div class="">
+                <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-3 lg:mb-4 flex items-center gap-2">
+                    <iconify-icon icon="solar:record-circle-linear" width="12" class="animate-pulse"></iconify-icon> CURRENT: PT. ME TECH
+                </div>
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight-custom leading-[0.85] mb-4 lg:mb-6">
+                    Logic &amp;<br>Laravel.
+                </h1>
+                <div class="w-12 h-2 bg-[#FF3300] mb-4 lg:mb-6"></div>
+                <p class="font-semibold text-base lg:text-lg leading-snug max-w-sm">
+                    Web Developer specializing in resilient backend architecture and dynamic frontend interfaces. Expert in PHP (Laravel, CodeIgniter) and modern JavaScript (React, Next.js).
+                </p>
+            </div>
+
+            <div class="mt-8 lg:mt-0">
+                <div class="font-tech text-[10px] mb-2 text-gray-500 uppercase">Localhost: 127.0.0.1:8000</div>
+                <a href="#work" class="group block w-full border-beam bg-transparent hover:bg-black hover:text-white transition-all duration-0 p-4 text-center uppercase font-bold tracking-wider flex justify-between items-center text-sm lg:text-base">
+                    <span>View Projects</span>
+                    <iconify-icon icon="solar:arrow-right-down-linear" width="20"></iconify-icon>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- C. Tech Stack: "The Toolkit" -->
+    <section class="w-full border-beam-b overflow-hidden bg-white" id="stack">
+        <div class="bg-black text-white px-4 lg:px-6 py-2 font-tech text-[10px] lg:text-xs border-beam-b tracking-widest uppercase flex items-center gap-2">
+            <iconify-icon icon="solar:cpu-linear" width="14"></iconify-icon> System Dependencies
+        </div>
+        
+        <!-- Marquee Container -->
+        <div class="flex whitespace-nowrap overflow-hidden border-beam-b bg-[#E6E6E6] py-6 lg:py-8">
+            <div class="flex animate-marquee">
+                <!-- Set 1 -->
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:laravel" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">Laravel</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:codeigniter-icon" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">CodeIgniter</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:php" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">PHP</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:react" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">React.js</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:nextjs-icon" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">Next.js</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:mysql" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">MySQL</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:nodejs-icon" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">Node.js</span>
+                </div>
+                 <!-- Set 2 (Duplicate for smooth loop) -->
+                 <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:laravel" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">Laravel</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:codeigniter-icon" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">CodeIgniter</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:php" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">PHP</span>
+                </div>
+                <div class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <iconify-icon icon="logos:react" width="24" class="lg:w-[32px]"></iconify-icon> <span class="font-bold text-lg lg:text-xl uppercase">React.js</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- D. Philosophy -->
+    <section class="w-full border-beam-b">
+        <div class="grid grid-cols-1 md:grid-cols-3">
+            <!-- Col 1 -->
+            <div class="border-beam-b md:border-b-0 lg:border-beam-r p-6 lg:p-12 bg-white lg:bg-transparent">
+                <h2 class="text-3xl lg:text-4xl font-bold uppercase tracking-tight-custom leading-none mb-4">Back<br>End.</h2>
+                <div class="w-full h-[2px] bg-black mb-4"></div>
+                <p class="font-tech text-xs uppercase tracking-widest text-[#FF3300]">/// Protocol: REST API</p>
+                <p class="mt-4 text-sm font-medium leading-relaxed opacity-80">
+                    Experienced in developing REST APIs using Laravel and CodeIgniter. Focus on authentication, RBAC, and data validation.
+                </p>
+            </div>
+
+            <!-- Col 2 -->
+            <div class="border-beam-b md:border-b-0 lg:border-beam-r p-6 lg:p-12 hover:bg-white transition-colors duration-0 group relative cursor-help">
+                <div class="absolute top-4 left-4 w-4 h-4 border-l-2 border-t-2 border-[#FF3300] hidden group-hover:block"></div>
+                <div class="absolute bottom-4 right-4 w-4 h-4 border-r-2 border-b-2 border-[#FF3300] hidden group-hover:block"></div>
+                
+                <h3 class="font-bold text-lg lg:text-xl uppercase mb-4 flex items-center gap-2">
+                    <iconify-icon icon="solar:layers-minimalistic-linear" width="24"></iconify-icon> Front End
+                </h3>
+                <p class="text-sm font-medium leading-relaxed opacity-80">
+                    Building responsive web applications and admin dashboards using React.js and Next.js. Seamless integration with backend services.
+                </p>
+            </div>
+
+            <!-- Col 3 -->
+            <div class="p-6 lg:p-12 hover:bg-white transition-colors duration-0 group relative cursor-help">
+                <h3 class="font-bold text-lg lg:text-xl uppercase mb-4 flex items-center gap-2">
+                    <iconify-icon icon="solar:database-linear" width="24"></iconify-icon> Database
+                </h3>
+                <p class="text-sm font-medium leading-relaxed opacity-80">
+                    MySQL optimization. Handling large transaction tables, improving query performance, and generating reporting features.
+                </p>
+                <div class="mt-6 lg:mt-8 font-tech text-xs border border-black inline-block px-2 py-1 bg-gray-100">
+                    QUERY OPTIMIZATION
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- E. Projects: "The Registry" -->
+    <section class="w-full border-beam-b bg-[#1A1A1A]" id="work">
+        <div class="border-beam-b bg-[#E6E6E6] p-4 flex justify-between items-center sticky top-[74px] lg:top-20 z-30 shadow-md">
+            <h2 class="text-lg lg:text-xl font-bold uppercase tracking-tight">Project Registry</h2>
+            <span class="font-tech text-[10px] lg:text-xs border border-black px-2 py-1 bg-white">INDEX: SELECTED</span>
+        </div>
+
+        <!-- Project 1: MySuzuki -->
+        <div class="group relative w-full h-[55vh] md:h-[60vh] lg:h-[70vh] border-beam-b overflow-hidden cursor-pointer">
+            <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&amp;w=2574&amp;auto=format&amp;fit=crop');">
+            </div>
+            <!-- Overlay Info -->
+            <div class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest">Type: Admin Dashboard &amp; Booking</div>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tight leading-none mb-3 lg:mb-4 group-hover:translate-x-2 transition-transform duration-200">
+                    MySuzuki<br>Dashboard
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4 lg:mb-6">
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Next.js</span>
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">REST API</span>
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Reporting</span>
+                </div>
+                <p class="text-gray-300 text-xs lg:text-sm max-w-md mb-6 hidden group-hover:block">
+                    Built an admin dashboard for managing booking service operations. Implemented RBAC, reporting features, and 3rd party payment integration.
+                </p>
+                <button class="bg-white text-black font-tech text-[10px] lg:text-xs uppercase px-4 lg:px-6 py-2 lg:py-3 font-bold hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex items-center gap-2 w-max">
+                    Case Study <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Project 2: Mepay & Forkom -->
+        <div class="group relative w-full h-[55vh] md:h-[60vh] lg:h-[70vh] border-beam-b overflow-hidden cursor-pointer">
+            <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&amp;w=2670&amp;auto=format&amp;fit=crop');">
+            </div>
+            <div class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest">Type: PPOB Services</div>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tight leading-none mb-3 lg:mb-4 group-hover:translate-x-2 transition-transform duration-200">
+                    Mepay &amp;<br>Forkom
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4 lg:mb-6">
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Laravel</span>
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Payment Gateway</span>
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Transactions</span>
+                </div>
+                <p class="text-gray-300 text-xs lg:text-sm max-w-md mb-6 hidden group-hover:block">
+                    Developed an admin system for PPOB services. Connected external payment APIs and implemented transaction monitoring.
+                </p>
+                <button class="bg-white text-black font-tech text-[10px] lg:text-xs uppercase px-4 lg:px-6 py-2 lg:py-3 font-bold hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex items-center gap-2 w-max">
+                    View Details <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Project 3: Ges Property -->
+        <div class="group relative w-full h-[55vh] md:h-[60vh] lg:h-[70vh] border-beam-b overflow-hidden cursor-pointer">
+            <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&amp;w=2670&amp;auto=format&amp;fit=crop');">
+            </div>
+            <div class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest">Type: Property Management</div>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tight leading-none mb-3 lg:mb-4 group-hover:translate-x-2 transition-transform duration-200">
+                    Ges<br>Property
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4 lg:mb-6">
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">PHP</span>
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Admin Panel</span>
+                    <span class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Workflow</span>
+                </div>
+                <p class="text-gray-300 text-xs lg:text-sm max-w-md mb-6 hidden group-hover:block">
+                    Built a property management system for booking and transactions. Improved workflow through a practical admin dashboard.
+                </p>
+                <button class="bg-white text-black font-tech text-[10px] lg:text-xs uppercase px-4 lg:px-6 py-2 lg:py-3 font-bold hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex items-center gap-2 w-max">
+                    Inspect <iconify-icon icon="solar:code-square-linear" width="14"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- F. About: "The Operator" -->
+    <section class="w-full border-beam-b" id="about">
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+            <!-- Profile Image -->
+            <div class="lg:col-span-5 relative border-beam-b lg:border-b-0 lg:border-beam-r h-[350px] lg:h-auto overflow-hidden group">
+                <div class="absolute inset-0 bg-cover bg-center grayscale contrast-125 hover:grayscale-0 transition-all duration-500" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&amp;w=1887&amp;auto=format&amp;fit=crop');"></div>
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-[#FF3300]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 lg:p-8">
+                    <p class="font-tech text-white text-base lg:text-lg">"Problem solving is the core."</p>
+                </div>
+            </div>
+
+            <!-- Bio -->
+            <div class="lg:col-span-7 p-6 lg:p-16 flex flex-col bg-[#E6E6E6] justify-center">
+                <div class="font-tech text-xs text-gray-500 uppercase mb-4 tracking-widest">ID: DHABY_ANGGIKA // WEB DEV</div>
+                <h2 class="text-4xl lg:text-5xl uppercase font-bold tracking-tight-custom mb-6">Dhaby<br>Anggika PUTRA.</h2>
+                <div class="w-20 h-2 bg-black mb-6 lg:mb-8"></div>
+                <p class="text-base lg:text-xl font-medium leading-relaxed opacity-90 mb-8 max-w-xl">
+                    I am a Web Developer with over 3 years of experience. I build web applications using PHP (CodeIgniter, Laravel) and JavaScript (React.js, Next.js). Comfortable working with databases and collaborating in team environments to solve real-world problems.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-tech border-black border-t pt-8">
+                    <div class="">
+                        <span class="block text-gray-500 uppercase mb-1">Experience</span>
+                        <span class="text-lg font-bold">3+ YEARS</span>
+                    </div>
+                    <div>
+                        <span class="block text-gray-500 uppercase mb-1">Education</span>
+                        <span class="text-lg font-bold">STMIK BANDUNG</span>
+                    </div>
+                    <div>
+                        <span class="block text-gray-500 uppercase mb-1">Location</span>
+                        <span class="text-lg font-bold">BANDUNG, ID</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- G. List / Services: "Capabilities" -->
+    <section class="border-beam-b p-6 lg:p-12 bg-white w-full">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl lg:text-3xl font-bold uppercase tracking-tight mb-6 lg:mb-8">System Capabilities</h2>
+            
+            <div class="border-t-2 border-black">
+                <!-- Row 1 -->
+                <div class="group flex flex-col md:flex-row justify-between items-start md:items-center py-4 lg:py-5 border-b-2 border-black hover:bg-[#FF3300] hover:text-white transition-colors duration-0 px-4 cursor-pointer">
+                    <div class="font-tech text-xs uppercase w-32 opacity-70 group-hover:opacity-100 group-hover:text-white mb-2 md:mb-0">Svc 01</div>
+                    <div class="flex-1 font-bold uppercase text-base lg:text-lg">Backend Development</div>
+                    <div class="font-tech text-xs lg:text-sm font-bold opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity mt-2 md:mt-0">PHP / LARAVEL / CI</div>
+                </div>
+                <!-- Row 2 -->
+                <div class="group flex flex-col md:flex-row justify-between items-start md:items-center py-4 lg:py-5 border-b-2 border-black hover:bg-[#FF3300] hover:text-white transition-colors duration-0 px-4 cursor-pointer">
+                    <div class="font-tech text-xs uppercase w-32 opacity-70 group-hover:opacity-100 group-hover:text-white mb-2 md:mb-0">Svc 02</div>
+                    <div class="flex-1 font-bold uppercase text-base lg:text-lg">Frontend Engineering</div>
+                    <div class="font-tech text-xs lg:text-sm font-bold opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity mt-2 md:mt-0">REACT.JS / NEXT.JS</div>
+                </div>
+                <!-- Row 3 -->
+                <div class="group flex flex-col md:flex-row justify-between items-start md:items-center py-4 lg:py-5 border-b-2 border-black hover:bg-[#FF3300] hover:text-white transition-colors duration-0 px-4 cursor-pointer">
+                    <div class="font-tech text-xs uppercase w-32 opacity-70 group-hover:opacity-100 group-hover:text-white mb-2 md:mb-0">Svc 03</div>
+                    <div class="flex-1 font-bold uppercase text-base lg:text-lg">API Integration</div>
+                    <div class="font-tech text-xs lg:text-sm font-bold opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity mt-2 md:mt-0">REST / PAYMENT GATEWAYS</div>
+                </div>
+                 <!-- Row 4 -->
+                 <div class="group flex flex-col md:flex-row justify-between items-start md:items-center py-4 lg:py-5 border-b-2 border-black hover:bg-[#FF3300] hover:text-white transition-colors duration-0 px-4 cursor-pointer">
+                    <div class="font-tech text-xs uppercase w-32 opacity-70 group-hover:opacity-100 group-hover:text-white mb-2 md:mb-0">Svc 04</div>
+                    <div class="flex-1 font-bold uppercase text-base lg:text-lg">Database Ops</div>
+                    <div class="font-tech text-xs lg:text-sm font-bold opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity mt-2 md:mt-0">MYSQL / OPTIMIZATION</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- H. Footer: "The End" -->
+    <footer class="bg-black text-[#E6E6E6] w-full border-t-2 border-black" id="contact">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+            
+            <div class="p-8 lg:p-16 border-b lg:border-b-0 lg:border-r border-[#333]">
+                <h2 class="text-5xl lg:text-6xl font-bold uppercase tracking-tight-custom leading-none mb-8">
+                    Let's<br>Connect.
+                </h2>
+                
+                <div class="space-y-4">
+                    <label class="font-tech text-xs uppercase tracking-widest text-gray-400">Direct Contact</label>
+                    <div class="flex flex-col gap-4">
+                        <a href="mailto:dhabyap@gmail.com" class="text-xl lg:text-2xl hover:text-[#FF3300] font-bold border-b border-[#333] pb-2 w-max break-all">dhabyap@gmail.com</a>
+                        <a href="tel:+6289656380397" class="text-lg lg:text-xl hover:text-[#FF3300] font-tech border-b border-[#333] pb-2 w-max">(+62) 896-5638-0397</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 lg:p-16 flex flex-col justify-between">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 lg:mb-16">
+                    <div>
+                        <h4 class="font-tech text-xs text-gray-400 uppercase mb-4">Location</h4>
+                        <p class="uppercase font-bold text-sm leading-relaxed">
+                            Bandung, Jawa Barat<br>
+                            Indonesia<br>
+                            GMT +7
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-tech text-xs text-gray-400 uppercase mb-4">Social</h4>
+                        <ul class="uppercase font-bold text-sm leading-relaxed space-y-2">
+                            <li><a href="https://www.linkedin.com/in/dhaby-anggika-putra-74371b225/" target="_blank" class="hover:text-[#FF3300]">LinkedIn</a></li>
+                            <li><a href="#" class="hover:text-[#FF3300]">GitHub</a></li>
+                            <li><a href="#" class="hover:text-[#FF3300]">GitLab</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-[#333] font-tech text-[10px] uppercase text-gray-500 gap-2">
+                    <div>© 2024 DHABY ANGGIKA PUTRA.</div>
+                    <div class="flex items-center gap-1">
+                        POWERED BY <iconify-icon icon="solar:battery-charge-linear"></iconify-icon> CODEIGNITER &amp; REACT
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const menuBtn = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                menuIcon.setAttribute('icon', 'solar:close-square-linear');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                document.body.style.overflow = '';
+                menuIcon.setAttribute('icon', 'solar:hamburger-menu-linear');
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Close menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+    </script>
+
+
+</body></html>
