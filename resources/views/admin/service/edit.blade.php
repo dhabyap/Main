@@ -7,7 +7,7 @@
     </div>
 
     <div class="admin-card">
-        <form action="{{ route('admin.service.update', $service->id) }}" method="POST">
+        <form action="{{ route('admin.service.update', $service) }}" method="POST">
             @csrf @method('PUT')
             <div class="form-group">
                 <label class="form-label">Title</label>

@@ -23,7 +23,7 @@
                                 @if($setting->type === 'image')
                                     @if($setting->value)
                                         <div class="mb-4 w-48 border-2 border-black p-1 bg-gray-100">
-                                            <img src="{{ filter_var($setting->value, FILTER_VALIDATE_URL) ? $setting->value : asset('storage/' . $setting->value) }}"
+                                            <img src="{{ \App\Models\Setting::url($setting->key) }}"
                                                 class="w-full h-32 object-cover grayscale">
                                         </div>
                                     @endif

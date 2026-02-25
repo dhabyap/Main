@@ -46,11 +46,10 @@
                                     title="View">
                                     <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
                                 </a>
-                                <a href="{{ route('admin.blog.edit', $blog->id) }}" class="p-1 hover:text-[#FF3300]"
-                                    title="Edit">
+                                <a href="{{ route('admin.blog.edit', $blog) }}" class="p-1 hover:text-[#FF3300]" title="Edit">
                                     <iconify-icon icon="solar:pen-new-square-linear" width="18"></iconify-icon>
                                 </a>
-                                <form action="{{ route('admin.blog.destroy', $blog->id) }}" method="POST"
+                                <form action="{{ route('admin.blog.destroy', $blog) }}" method="POST"
                                     onsubmit="return confirm('Delete this article?')">
                                     @csrf
                                     @method('DELETE')

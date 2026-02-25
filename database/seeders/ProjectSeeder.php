@@ -37,7 +37,7 @@ class ProjectSeeder extends Seeder
                 'title' => 'Mepay & Forkom',
                 'type' => 'PPOB Services',
                 'description' => 'PPOB admin system with payment API integration and role-based access control.',
-                'thumbnail' => 'https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=2670&auto=format&fit=crop',
+                'thumbnail' => 'https://adminca.sch.id/wp-content/uploads/2026/01/Admin-Dashboard-1-1024x582.png',
                 'tags' => ['Laravel', 'REST API', 'Payment Gateway'],
                 'url' => '#',
                 'status' => 'published',

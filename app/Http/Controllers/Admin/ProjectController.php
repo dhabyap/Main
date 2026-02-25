@@ -48,7 +48,7 @@ class ProjectController extends Controller
         }
 
         if (!empty($validated['tags'])) {
-            $validated['tags'] = array_map('trim', explode(',', $validated['tags']));
+            $validated['tags'] = array_filter(array_map('trim', explode(',', $validated['tags'])));
         } else {
             $validated['tags'] = [];
         }
@@ -91,7 +91,9 @@ class ProjectController extends Controller
         }
 
         if (isset($validated['tags'])) {
-            $validated['tags'] = array_map('trim', explode(',', $validated['tags']));
+            $validated['tags'] = array_filter(array_map('trim', explode(',', $validated['tags'])));
+        } else {
+            $validated['tags'] = [];
         }
 
         $project->update($validated);

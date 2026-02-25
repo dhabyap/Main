@@ -7,7 +7,7 @@
     </div>
 
     <div class="admin-card">
-        <form action="{{ route('admin.project.update', $project->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.project.update', $project) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 

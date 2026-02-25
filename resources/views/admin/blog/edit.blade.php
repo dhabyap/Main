@@ -9,7 +9,7 @@
         <h2 class="text-3xl font-bold uppercase tracking-tight">Edit Article</h2>
     </div>
 
-    <form action="{{ route('admin.blog.update', $blog->id) }}" method="POST" enctype="multipart/form-data"
+    <form action="{{ route('admin.blog.update', $blog) }}" method="POST" enctype="multipart/form-data"
         class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         @csrf
         @method('PUT')

@@ -50,11 +50,11 @@
                         </td>
                         <td class="p-4">
                             <div class="flex gap-2">
-                                <a href="{{ route('admin.project.edit', $project->id) }}" class="p-1 hover:text-[#FF3300]"
+                                <a href="{{ route('admin.project.edit', $project) }}" class="p-1 hover:text-[#FF3300]"
                                     title="Edit">
                                     <iconify-icon icon="solar:pen-new-square-linear" width="18"></iconify-icon>
                                 </a>
-                                <form action="{{ route('admin.project.destroy', $project->id) }}" method="POST"
+                                <form action="{{ route('admin.project.destroy', $project) }}" method="POST"
                                     onsubmit="return confirm('Delete this project?')">
                                     @csrf
                                     @method('DELETE')

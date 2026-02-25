@@ -28,10 +28,10 @@
                         <td class="p-4 border-r-2 border-black">{{ $item->order }}</td>
                         <td class="p-4">
                             <div class="flex gap-2">
-                                <a href="{{ route('admin.service.edit', $item->id) }}" class="p-1 hover:text-[#FF3300]">
+                                <a href="{{ route('admin.service.edit', $item) }}" class="p-1 hover:text-[#FF3300]">
                                     <iconify-icon icon="solar:pen-new-square-linear" width="18"></iconify-icon>
                                 </a>
-                                <form action="{{ route('admin.service.destroy', $item->id) }}" method="POST"
+                                <form action="{{ route('admin.service.destroy', $item) }}" method="POST"
                                     onsubmit="return confirm('Delete this service?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="p-1 hover:text-red-600">

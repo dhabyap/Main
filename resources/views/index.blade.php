@@ -7,7 +7,7 @@
         <div
             class="lg:col-span-8 border-beam-b lg:border-b-0 lg:border-beam-r relative overflow-hidden group order-1 h-[40vh] lg:h-auto">
             <div class="absolute inset-0 bg-cover bg-center brutalist-img"
-                style="background-image: url('{{ \App\Models\Setting::get('hero_image', 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop') }}');">
+                style="background-image: url('{{ \App\Models\Setting::url('hero_image', 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop') }}');">
             </div>
 
             <!-- Metadata Overlay -->
@@ -181,7 +181,7 @@
             <div
                 class="lg:col-span-5 relative border-beam-b lg:border-b-0 lg:border-beam-r h-[350px] lg:h-auto overflow-hidden group">
                 <div class="absolute inset-0 bg-cover bg-center grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
-                    style="background-image: url('{{ \App\Models\Setting::get('about_image', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop') }}');">
+                    style="background-image: url('{{ \App\Models\Setting::url('about_image', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop') }}');">
                 </div>
             </div>
 
