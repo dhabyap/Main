@@ -116,6 +116,21 @@
                     <a href="{{ route('admin.blog.index') }}"
                         class="hover:text-[#FF3300] {{ request()->routeIs('admin.blog.*') ? 'text-[#FF3300]' : '' }}">#
                         ARTICLES</a>
+                    <a href="{{ route('admin.project.index') }}"
+                        class="hover:text-[#FF3300] {{ request()->routeIs('admin.project.*') ? 'text-[#FF3300]' : '' }}">#
+                        PROJECTS</a>
+                    <a href="{{ route('admin.tech-stack.index') }}"
+                        class="hover:text-[#FF3300] {{ request()->routeIs('admin.tech-stack.*') ? 'text-[#FF3300]' : '' }}">#
+                        TECH</a>
+                    <a href="{{ route('admin.service.index') }}"
+                        class="hover:text-[#FF3300] {{ request()->routeIs('admin.service.*') ? 'text-[#FF3300]' : '' }}">#
+                        SERVICES</a>
+                    <a href="{{ route('admin.skill.index') }}"
+                        class="hover:text-[#FF3300] {{ request()->routeIs('admin.skill.*') ? 'text-[#FF3300]' : '' }}">#
+                        SKILLS</a>
+                    <a href="{{ route('admin.settings.index') }}"
+                        class="hover:text-[#FF3300] {{ request()->routeIs('admin.settings.*') ? 'text-[#FF3300]' : '' }}">#
+                        SETTINGS</a>
                 </div>
             </div>
             <div class="flex gap-4">

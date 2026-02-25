@@ -7,12 +7,12 @@
         <div
             class="lg:col-span-8 border-beam-b lg:border-b-0 lg:border-beam-r relative overflow-hidden group order-1 h-[40vh] lg:h-auto">
             <div class="absolute inset-0 bg-cover bg-center brutalist-img"
-                style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop');">
+                style="background-image: url('{{ \App\Models\Setting::get('hero_image', 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop') }}');">
             </div>
 
             <!-- Metadata Overlay -->
             <div class="absolute top-4 left-4 bg-white border-beam p-2 font-tech text-[10px] lg:text-xs z-10">
-                ROLE: WEB DEVELOPER // FULL-STACK
+                ROLE: {{ \App\Models\Setting::get('hero_role', 'WEB DEVELOPER // FULL-STACK') }}
             </div>
 
             <!-- Glitch Overlay -->
@@ -24,16 +24,15 @@
             <div class="">
                 <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-3 lg:mb-4 flex items-center gap-2">
                     <iconify-icon icon="solar:record-circle-linear" width="12" class="animate-pulse"></iconify-icon>
-                    CURRENT: PT. ME TECH
+                    CURRENT: {{ \App\Models\Setting::get('hero_current_work', 'PT. ME TECH') }}
                 </div>
                 <h1
                     class="text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight-custom leading-[0.85] mb-4 lg:mb-6">
-                    Logic &<br>Laravel.
+                    {!! str_replace(' & ', '<br>', \App\Models\Setting::get('hero_title', 'Logic & Laravel.')) !!}
                 </h1>
                 <div class="w-12 h-2 bg-[#FF3300] mb-4 lg:mb-6"></div>
                 <p class="font-semibold text-base lg:text-lg leading-snug max-w-sm">
-                    Web Developer specializing in resilient backend architecture and dynamic frontend interfaces. Expert in
-                    PHP (Laravel, CodeIgniter) and modern JavaScript (React, Next.js).
+                    {{ \App\Models\Setting::get('hero_description', 'Web Developer specializing in resilient backend architecture and dynamic frontend interfaces. Expert in PHP (Laravel, CodeIgniter) and modern JavaScript (React, Next.js).') }}
                 </p>
             </div>
 
@@ -58,48 +57,14 @@
         <!-- Marquee Container -->
         <div class="flex whitespace-nowrap overflow-hidden border-beam-b bg-[#E6E6E6] py-6 lg:py-8">
             <div class="flex animate-marquee">
-                <!-- Set 1 -->
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:laravel" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">Laravel</span>
-                </div>
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:codeigniter-icon" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">CodeIgniter</span>
-                </div>
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:php" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">PHP</span>
-                </div>
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:react" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">React.js</span>
-                </div>
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:nextjs-icon" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">Next.js</span>
-                </div>
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:mysql" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">MySQL</span>
-                </div>
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:nodejs-icon" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">Node.js</span>
-                </div>
-                <!-- Set 2 -->
-                <div
-                    class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <iconify-icon icon="logos:laravel" width="24" class="lg:w-[32px]"></iconify-icon> <span
-                        class="font-bold text-lg lg:text-xl uppercase">Laravel</span>
-                </div>
+                @php $techStacks = \App\Models\TechStack::orderBy('order', 'asc')->get(); @endphp
+                @foreach($techStacks->merge($techStacks) as $tech) {{-- Duplicate for seamless marquee --}}
+                    <div
+                        class="flex items-center mx-6 lg:mx-8 gap-3 lg:gap-4 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                        <iconify-icon icon="{{ $tech->icon }}" width="24" class="lg:w-[32px]"></iconify-icon>
+                        <span class="font-bold text-lg lg:text-xl uppercase">{{ $tech->name }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -107,46 +72,35 @@
     <!-- D. Philosophy -->
     <section class="w-full border-beam-b">
         <div class="grid grid-cols-1 md:grid-cols-3">
-            <div class="border-beam-b md:border-b-0 lg:border-beam-r p-6 lg:p-12 bg-white lg:bg-transparent">
-                <h2 class="text-3xl lg:text-4xl font-bold uppercase tracking-tight-custom leading-none mb-4">Back<br>End.
-                </h2>
-                <div class="w-full h-[2px] bg-black mb-4"></div>
-                <p class="font-tech text-xs uppercase tracking-widest text-[#FF3300]">/// Protocol: REST API</p>
-                <p class="mt-4 text-sm font-medium leading-relaxed opacity-80">
-                    Experienced in developing REST APIs using Laravel and CodeIgniter. Focus on authentication, RBAC, and
-                    data validation.
-                </p>
-            </div>
-
-            <div
-                class="border-beam-b md:border-b-0 lg:border-beam-r p-6 lg:p-12 hover:bg-white transition-colors duration-0 group relative cursor-help">
-                <div class="absolute top-4 left-4 w-4 h-4 border-l-2 border-t-2 border-[#FF3300] hidden group-hover:block">
-                </div>
+            @php $services = \App\Models\Service::orderBy('order', 'asc')->take(3)->get(); @endphp
+            @foreach($services as $index => $service)
                 <div
-                    class="absolute bottom-4 right-4 w-4 h-4 border-r-2 border-b-2 border-[#FF3300] hidden group-hover:block">
-                </div>
+                    class="border-beam-b md:border-b-0 {{ !$loop->last ? 'lg:border-beam-r' : '' }} p-6 lg:p-12 hover:bg-white transition-colors duration-0 group relative cursor-help">
+                    @if($index > 0)
+                        <div class="absolute top-4 left-4 w-4 h-4 border-l-2 border-t-2 border-[#FF3300] hidden group-hover:block">
+                        </div>
+                        <div
+                            class="absolute bottom-4 right-4 w-4 h-4 border-r-2 border-b-2 border-[#FF3300] hidden group-hover:block">
+                        </div>
+                    @endif
 
-                <h3 class="font-bold text-lg lg:text-xl uppercase mb-4 flex items-center gap-2">
-                    <iconify-icon icon="solar:layers-minimalistic-linear" width="24"></iconify-icon> Front End
-                </h3>
-                <p class="text-sm font-medium leading-relaxed opacity-80">
-                    Building responsive web applications and admin dashboards using React.js and Next.js. Seamless
-                    integration with backend services.
-                </p>
-            </div>
+                    <h2 class="text-3xl lg:text-4xl font-bold uppercase tracking-tight-custom leading-none mb-4">
+                        {!! str_replace(' ', '<br>', $service->title) !!}
+                    </h2>
+                    <div class="w-full h-[2px] bg-black mb-4"></div>
 
-            <div class="p-6 lg:p-12 hover:bg-white transition-colors duration-0 group relative cursor-help">
-                <h3 class="font-bold text-lg lg:text-xl uppercase mb-4 flex items-center gap-2">
-                    <iconify-icon icon="solar:database-linear" width="24"></iconify-icon> Database
-                </h3>
-                <p class="text-sm font-medium leading-relaxed opacity-80">
-                    MySQL optimization. Handling large transaction tables, improving query performance, and generating
-                    reporting features.
-                </p>
-                <div class="mt-6 lg:mt-8 font-tech text-xs border border-black inline-block px-2 py-1 bg-gray-100">
-                    QUERY OPTIMIZATION
+                    @if($service->icon)
+                        <p class="font-tech text-xs uppercase tracking-widest text-[#FF3300] flex items-center gap-2 mb-4">
+                            <iconify-icon icon="{{ $service->icon }}" width="14"></iconify-icon>
+                            @if($service->icon == 'solar:protocol-linear') /// Protocol: REST API @endif
+                        </p>
+                    @endif
+
+                    <p class="text-sm font-medium leading-relaxed opacity-80">
+                        {{ $service->description }}
+                    </p>
                 </div>
-            </div>
+            @endforeach
         </div>
     </section>
 
@@ -184,52 +138,41 @@
             <span class="font-tech text-[10px] lg:text-xs border border-black px-2 py-1 bg-white">INDEX: SELECTED</span>
         </div>
 
-        <!-- Project 1: MySuzuki -->
-        <div class="group relative w-full h-[55vh] md:h-[60vh] lg:h-[70vh] border-beam-b overflow-hidden cursor-pointer">
-            <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105"
-                style="background-image: url('https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=2574&auto=format&fit=crop');">
-            </div>
-            <div
-                class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
-                <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest">Type: Admin
-                    Dashboard & Booking</div>
-                <h3
-                    class="text-3xl md:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tight leading-none mb-3 lg:mb-4 group-hover:translate-x-2 transition-transform duration-200">
-                    MySuzuki<br>Dashboard
-                </h3>
-                <div class="flex flex-wrap gap-2 mb-4 lg:mb-6">
-                    <span
-                        class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">Next.js</span>
-                    <span
-                        class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">REST
-                        API</span>
-                </div>
-                <button
-                    class="bg-white text-black font-tech text-[10px] lg:text-xs uppercase px-4 lg:px-6 py-2 lg:py-3 font-bold hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex items-center gap-2 w-max">
-                    Case Study <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
-                </button>
-            </div>
-        </div>
+        @php
+            $projects = \App\Models\Project::where('status', 'published')->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
+        @endphp
 
-        <!-- Project 2 -->
-        <div class="group relative w-full h-[55vh] md:h-[60vh] lg:h-[70vh] border-beam-b overflow-hidden cursor-pointer">
-            <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105"
-                style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=2670&auto=format&fit=crop');">
-            </div>
-            <div
-                class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
-                <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest">Type: PPOB
-                    Services</div>
-                <h3
-                    class="text-3xl md:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tight leading-none mb-3 lg:mb-4 group-hover:translate-x-2 transition-transform duration-200">
-                    Mepay &<br>Forkom
-                </h3>
-                <button
-                    class="bg-white text-black font-tech text-[10px] lg:text-xs uppercase px-4 lg:px-6 py-2 lg:py-3 font-bold hover:bg-[#FF3300] hover:text-white transition-colors duration-0 flex items-center gap-2 w-max">
-                    View Details <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
-                </button>
-            </div>
-        </div>
+        @forelse($projects as $project)
+            <a href="{{ route('project.show', $project->slug) }}"
+                class="group relative block w-full h-[55vh] md:h-[60vh] lg:h-[70vh] border-beam-b overflow-hidden cursor-pointer">
+                <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105"
+                    style="background-image: url('{{ filter_var($project->thumbnail, FILTER_VALIDATE_URL) ? $project->thumbnail : asset('storage/' . $project->thumbnail) }}');">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                    <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest">Type:
+                        {{ $project->type }}</div>
+                    <h3
+                        class="text-3xl md:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tight leading-none mb-3 lg:mb-4 group-hover:translate-x-2 transition-transform duration-200">
+                        {!! str_replace(' & ', '<br>', $project->title) !!}
+                    </h3>
+                    <div class="flex flex-wrap gap-2 mb-4 lg:mb-6">
+                        @if($project->tags)
+                            @foreach($project->tags as $tag)
+                                <span
+                                    class="text-white text-[10px] lg:text-xs border border-white/30 px-2 py-1 font-tech uppercase bg-black/50">{{ $tag }}</span>
+                            @endforeach
+                        @endif
+                    </div>
+                    <div
+                        class="bg-white text-black font-tech text-[10px] lg:text-xs uppercase px-4 lg:px-6 py-2 lg:py-3 font-bold group-hover:bg-[#FF3300] group-hover:text-white transition-colors duration-0 flex items-center gap-2 w-max">
+                        Case Study <iconify-icon icon="solar:arrow-right-up-linear" width="14"></iconify-icon>
+                    </div>
+                </div>
+            </a>
+        @empty
+            <div class="p-20 text-center text-white opacity-50 italic">Registry currently empty.</div>
+        @endforelse
     </section>
 
     <!-- F. About: "The Operator" -->
@@ -238,32 +181,35 @@
             <div
                 class="lg:col-span-5 relative border-beam-b lg:border-b-0 lg:border-beam-r h-[350px] lg:h-auto overflow-hidden group">
                 <div class="absolute inset-0 bg-cover bg-center grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
-                    style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop');">
+                    style="background-image: url('{{ \App\Models\Setting::get('about_image', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop') }}');">
                 </div>
             </div>
 
             <div class="lg:col-span-7 p-6 lg:p-16 flex flex-col bg-[#E6E6E6] justify-center">
-                <div class="font-tech text-xs text-gray-500 uppercase mb-4 tracking-widest">ID: DHABY_ANGGIKA // WEB DEV
+                <div class="font-tech text-xs text-gray-500 uppercase mb-4 tracking-widest">ID:
+                    {{ \App\Models\Setting::get('about_id_tag', 'DHABY_ANGGIKA // WEB DEV') }}
                 </div>
-                <h2 class="text-4xl lg:text-5xl uppercase font-bold tracking-tight-custom mb-6">Dhaby<br>Anggika PUTRA.</h2>
+                <h2 class="text-4xl lg:text-5xl uppercase font-bold tracking-tight-custom mb-6">
+                    {!! str_replace(' PUTRA.', '<br>PUTRA.', \App\Models\Setting::get('about_name', 'Dhaby Anggika PUTRA.')) !!}
+                </h2>
                 <div class="w-20 h-2 bg-black mb-6 lg:mb-8"></div>
                 <p class="text-base lg:text-xl font-medium leading-relaxed opacity-90 mb-8 max-w-xl">
-                    I am a Web Developer with over 3 years of experience. I build web applications using PHP (CodeIgniter,
-                    Laravel) and JavaScript (React.js, Next.js).
+                    {{ \App\Models\Setting::get('about_description', 'I am a Web Developer with over 3 years of experience. I build web applications using PHP (CodeIgniter, Laravel) and JavaScript (React.js, Next.js).') }}
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-tech border-black border-t pt-8">
                     <div>
                         <span class="block text-gray-500 uppercase mb-1">Experience</span>
-                        <span class="text-lg font-bold">3+ YEARS</span>
+                        <span
+                            class="text-lg font-bold">{{ \App\Models\Setting::get('experience_years', '3+ YEARS') }}</span>
                     </div>
                     <div>
                         <span class="block text-gray-500 uppercase mb-1">Education</span>
-                        <span class="text-lg font-bold">STMIK BANDUNG</span>
+                        <span class="text-lg font-bold">{{ \App\Models\Setting::get('education', 'STMIK BANDUNG') }}</span>
                     </div>
                     <div>
                         <span class="block text-gray-500 uppercase mb-1">Location</span>
-                        <span class="text-lg font-bold">BANDUNG, ID</span>
+                        <span class="text-lg font-bold">{{ \App\Models\Setting::get('location', 'BANDUNG, ID') }}</span>
                     </div>
                 </div>
             </div>
@@ -275,18 +221,16 @@
         <div class="max-w-4xl mx-auto">
             <h2 class="text-2xl lg:text-3xl font-bold uppercase tracking-tight mb-6 lg:mb-8">System Capabilities</h2>
             <div class="border-t-2 border-black">
-                <div
-                    class="group flex flex-col md:flex-row justify-between items-start md:items-center py-4 lg:py-5 border-b-2 border-black hover:bg-[#FF3300] hover:text-white transition-colors duration-0 px-4 cursor-pointer">
-                    <div class="font-tech text-xs uppercase w-32 opacity-70 group-hover:opacity-100 mb-2 md:mb-0">Svc 01
+                @php $skills = \App\Models\Skill::orderBy('order', 'asc')->get(); @endphp
+                @foreach($skills as $index => $skill)
+                    <div
+                        class="group flex flex-col md:flex-row justify-between items-start md:items-center py-4 lg:py-5 border-b-2 border-black hover:bg-[#FF3300] hover:text-white transition-colors duration-0 px-4 cursor-pointer">
+                        <div class="font-tech text-xs uppercase w-32 opacity-70 group-hover:opacity-100 mb-2 md:mb-0">Svc
+                            0{{ $index + 1 }}
+                        </div>
+                        <div class="flex-1 font-bold uppercase text-base lg:text-lg">{{ $skill->title }}</div>
                     </div>
-                    <div class="flex-1 font-bold uppercase text-base lg:text-lg">Backend Development</div>
-                </div>
-                <div
-                    class="group flex flex-col md:flex-row justify-between items-start md:items-center py-4 lg:py-5 border-b-2 border-black hover:bg-[#FF3300] hover:text-white transition-colors duration-0 px-4 cursor-pointer">
-                    <div class="font-tech text-xs uppercase w-32 opacity-70 group-hover:opacity-100 mb-2 md:mb-0">Svc 02
-                    </div>
-                    <div class="flex-1 font-bold uppercase text-base lg:text-lg">Frontend Engineering</div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

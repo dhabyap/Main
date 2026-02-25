@@ -12,13 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::updateOrCreate(
-            ['email' => 'admin@dhaby.dev'],
-            [
-                'name' => 'Dhaby Anggika',
-                'password' => \Illuminate\Support\Facades\Hash::make('password'),
-            ]
-        );
+        $this->call([
+            UserSeeder::class,
+            SettingSeeder::class,
+            TechStackSeeder::class,
+            ServiceSeeder::class,
+            SkillSeeder::class,
+            ProjectSeeder::class,
+            BlogSeeder::class,
+        ]);
     }
-
 }
