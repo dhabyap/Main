@@ -25,7 +25,7 @@ class SettingController extends Controller
                 $setting = Setting::where('key', $key)->first();
 
                 if (!$setting) {
-                    Log::warning("SETTING TIDAK DITEMUKAN", [
+                    Log::warning('SETTING TIDAK DITEMUKAN', [
                         'key' => $key
                     ]);
                     continue;
@@ -34,7 +34,7 @@ class SettingController extends Controller
                 if ($setting->type === 'image') {
 
                     if (!$request->hasFile($key)) {
-                        Log::error("UPLOAD FILE TIDAK TERKIRIM", [
+                        Log::error('UPLOAD FILE TIDAK TERKIRIM', [
                             'key' => $key,
                             'files' => array_keys($request->files->all())
                         ]);
@@ -42,38 +42,61 @@ class SettingController extends Controller
                     }
 
                     try {
-                        if ($setting->value && !filter_var($setting->value, FILTER_VALIDATE_URL)) {
-                            Storage::disk('public')->delete($setting->value);
+                        $file = $request->file($key);
+
+                        if (!$file->isValid()) {
+                            Log::error('FILE TIDAK VALID', [
+                                'key' => $key
+                            ]);
+                            continue;
                         }
 
-                        $path = $request->file($key)->store('settings', 'public');
+                        if (
+                            $setting->value &&
+                            !filter_var($setting->value, FILTER_VALIDATE_URL) &&
+                            file_exists(public_path($setting->value))
+                        ) {
+                            unlink(public_path($setting->value));
+                        }
+
+                        $uploadPath = public_path('uploads/settings');
+                        if (!is_dir($uploadPath)) {
+                            mkdir($uploadPath, 0755, true);
+                        }
+
+                        $filename = uniqid() . '_' . $file->getClientOriginalName();
+
+                        $file->move($uploadPath, $filename);
 
                         $setting->update([
-                            'value' => $path
+                            'value' => 'uploads/settings/' . $filename
                         ]);
 
-                        Log::info("UPLOAD IMAGE BERHASIL", [
+                        Log::info('UPLOAD IMAGE BERHASIL (PUBLIC)', [
                             'key' => $key,
-                            'path' => $path
+                            'path' => 'uploads/settings/' . $filename
                         ]);
 
                     } catch (\Throwable $e) {
-                        Log::error("UPLOAD IMAGE GAGAL", [
+                        Log::error('UPLOAD IMAGE GAGAL', [
                             'key' => $key,
                             'error' => $e->getMessage(),
                             'trace' => $e->getTraceAsString()
                         ]);
                     }
 
-                } else {
-                    $setting->update(['value' => $value]);
+                }
+                else {
+                    $setting->update([
+                        'value' => $value
+                    ]);
                 }
             }
 
             return back()->with('success', 'Settings updated successfully.');
 
         } catch (\Throwable $e) {
-            Log::critical("SETTINGS UPDATE CRASH", [
+            Log::critical('SETTINGS UPDATE CRASH', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
