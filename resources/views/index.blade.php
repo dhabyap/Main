@@ -150,8 +150,25 @@
                 </div>
                 <div
                     class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
-                    <div class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest">Type:
-                        {{ $project->type }}</div>
+                    <!-- Category Badge -->
+                    <div class="absolute top-3 right-3 lg:top-4 lg:right-4 z-20 flex flex-col items-end gap-2 text-center">
+                        @if($project->category === 'professional')
+                            <div class="bg-[#FF3300] text-white font-tech text-[9px] lg:text-xs px-2 py-0.5 lg:px-3 lg:py-1 border-2 border-black font-bold uppercase tracking-widest flex items-center gap-1 lg:gap-2 transform rotate-1 group-hover:rotate-0 transition-transform shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                <iconify-icon icon="solar:case-minimalistic-bold" width="12" class="lg:w-[14px]"></iconify-icon>
+                                Professional_Work
+                            </div>
+                        @else
+                            <div class="bg-white text-black font-tech text-[9px] lg:text-xs px-2 py-0.5 lg:px-3 lg:py-1 border-2 border-black font-bold uppercase tracking-widest flex items-center gap-1 lg:gap-2 transform -rotate-1 group-hover:rotate-0 transition-transform shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                <iconify-icon icon="solar:user-circle-bold" width="12" class="lg:w-[14px]"></iconify-icon>
+                                Personal_Lab
+                            </div>
+                        @endif
+                    </div>
+
+                    <div
+                        class="font-tech text-[10px] lg:text-xs text-[#FF3300] mb-2 uppercase tracking-widest flex items-center gap-2">
+                        <span>TYPE: {{ $project->type }}</span>
+                    </div>
                     <h3
                         class="text-3xl md:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tight leading-none mb-3 lg:mb-4 group-hover:translate-x-2 transition-transform duration-200">
                         {!! str_replace(' & ', '<br>', $project->title) !!}

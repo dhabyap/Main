@@ -4,8 +4,11 @@
     <!-- Project Detail Hero -->
     <section class="w-full border-beam-b bg-[#1A1A1A] py-20 px-6 lg:px-10">
         <div class="container mx-auto">
-            <div class="font-tech text-xs text-[#FF3300] mb-4 uppercase tracking-widest flex items-center gap-2">
+            <div class="font-tech text-xs text-[#FF3300] mb-4 uppercase tracking-widest flex flex-wrap items-center gap-2">
                 <iconify-icon icon="solar:folder-path-linear" width="14"></iconify-icon> PROJECT_REGISTRY /
+                <span
+                    class="text-white bg-[#FF3300] px-2 py-0.5 border border-black">{{ $project->category === 'professional' ? 'Professional_Work' : 'Personal_Lab' }}</span>
+                /
                 {{ $project->type }}
             </div>
             <h1

@@ -64,6 +64,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select name="category" class="form-control" required>
+                            <option value="professional" {{ old('category', $project->category) == 'professional' ? 'selected' : '' }}>Professional (Work)</option>
+                            <option value="personal" {{ old('category', $project->category) == 'personal' ? 'selected' : '' }}>Personal Project</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label">Display Order</label>
                         <input type="number" name="order" class="form-control" value="{{ old('order', $project->order) }}">
                     </div>

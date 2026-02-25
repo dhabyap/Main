@@ -39,6 +39,7 @@ class ProjectController extends Controller
             'url' => 'nullable|url',
             'status' => 'required|in:draft,published',
             'order' => 'integer',
+            'category' => 'required|in:professional,personal',
             'description' => 'nullable'
         ]);
 
@@ -79,6 +80,7 @@ class ProjectController extends Controller
             'url' => 'nullable|url',
             'status' => 'required|in:draft,published',
             'order' => 'integer',
+            'category' => 'required|in:professional,personal',
             'description' => 'nullable'
         ]);
 

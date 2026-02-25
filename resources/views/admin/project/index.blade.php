@@ -15,6 +15,7 @@
                     <th class="p-4 border-r-2 border-black">Thumbnail</th>
                     <th class="p-4 border-r-2 border-black">Title & Type</th>
                     <th class="p-4 border-r-2 border-black">Tags</th>
+                    <th class="p-4 border-r-2 border-black">Category</th>
                     <th class="p-4 border-r-2 border-black">Status</th>
                     <th class="p-4">Actions</th>
                 </tr>
@@ -41,6 +42,11 @@
                                     <span class="bg-black text-white px-1 text-[8px]">{{ $tag }}</span>
                                 @endforeach
                             </div>
+                        </td>
+                        <td class="p-4 border-r-2 border-black">
+                            <span class="px-2 py-1 text-[8px] border border-black {{ $project->category === 'professional' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700' }}">
+                                {{ $project->category }}
+                            </span>
                         </td>
                         <td class="p-4 border-r-2 border-black">
                             <span

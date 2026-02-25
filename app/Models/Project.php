@@ -18,6 +18,7 @@ class Project extends Model
         'url',
         'status',
         'order',
+        'category',
         'description'
     ];
 
