@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
@@ -25,9 +24,7 @@ class SettingController extends Controller
                 $setting = Setting::where('key', $key)->first();
 
                 if (!$setting) {
-                    Log::warning('SETTING TIDAK DITEMUKAN', [
-                        'key' => $key
-                    ]);
+                    Log::warning('SETTING TIDAK DITEMUKAN', ['key' => $key]);
                     continue;
                 }
 
@@ -45,9 +42,7 @@ class SettingController extends Controller
                         $file = $request->file($key);
 
                         if (!$file->isValid()) {
-                            Log::error('FILE TIDAK VALID', [
-                                'key' => $key
-                            ]);
+                            Log::error('FILE TIDAK VALID', ['key' => $key]);
                             continue;
                         }
 
@@ -60,6 +55,7 @@ class SettingController extends Controller
                         }
 
                         $uploadPath = public_path('uploads/settings');
+
                         if (!is_dir($uploadPath)) {
                             mkdir($uploadPath, 0755, true);
                         }
@@ -72,7 +68,7 @@ class SettingController extends Controller
                             'value' => 'uploads/settings/' . $filename
                         ]);
 
-                        Log::info('UPLOAD IMAGE BERHASIL (PUBLIC)', [
+                        Log::info('UPLOAD IMAGE BERHASIL', [
                             'key' => $key,
                             'path' => 'uploads/settings/' . $filename
                         ]);
@@ -85,8 +81,7 @@ class SettingController extends Controller
                         ]);
                     }
 
-                }
-                else {
+                } else {
                     $setting->update([
                         'value' => $value
                     ]);
@@ -104,5 +99,4 @@ class SettingController extends Controller
             return back()->with('error', 'Terjadi kesalahan. Cek log.');
         }
     }
-
 }
