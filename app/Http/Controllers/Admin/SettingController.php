@@ -54,7 +54,7 @@ class SettingController extends Controller
                             unlink(public_path($setting->value));
                         }
 
-                        $uploadPath = public_path('uploads/settings');
+                        $uploadPath = dirname(base_path()) . '/uploads/settings';
 
                         if (!is_dir($uploadPath)) {
                             mkdir($uploadPath, 0755, true);
