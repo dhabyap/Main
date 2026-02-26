@@ -97,11 +97,26 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            if ($project->thumbnail && !filter_var($project->thumbnail, FILTER_VALIDATE_URL)) {
-                Storage::disk('public')->delete($project->thumbnail);
+            $file = $request->file('thumbnail');
+
+            if (
+                $project->thumbnail &&
+                !filter_var($project->thumbnail, FILTER_VALIDATE_URL) &&
+                file_exists(public_path('../' . $project->thumbnail))
+            ) {
+                unlink(public_path('../' . $project->thumbnail));
             }
-            $path = $request->file('thumbnail')->store('projects', 'public');
-            $validated['thumbnail'] = $path;
+
+            $uploadPath = dirname(base_path()) . '/uploads/projects';
+
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            $filename = uniqid() . '_' . $file->getClientOriginalName();
+            $file->move($uploadPath, $filename);
+
+            $validated['thumbnail'] = 'uploads/projects/' . $filename;
         }
 
         if (isset($validated['tags'])) {
@@ -112,7 +127,9 @@ class ProjectController extends Controller
 
         $project->update($validated);
 
-        return redirect()->route('admin.project.index')->with('success', 'Project updated successfully.');
+        return redirect()
+            ->route('admin.project.index')
+            ->with('success', 'Project updated successfully.');
     }
 
     /**
