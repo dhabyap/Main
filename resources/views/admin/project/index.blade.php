@@ -25,11 +25,14 @@
                     <tr class="hover:bg-[#f9f9f9]">
                         <td class="p-4 border-r-2 border-black w-24">
                             @if($project->thumbnail)
-                                <img src="{{ filter_var($project->thumbnail, FILTER_VALIDATE_URL) ? $project->thumbnail : asset('storage/' . $project->thumbnail) }}"
-                                    class="w-16 h-16 object-cover border border-black grayscale">
+                                        <img src="{{ filter_var($project->thumbnail, FILTER_VALIDATE_URL)
+                                ? $project->thumbnail
+                                : asset($project->thumbnail) }}"
+                                            class="w-16 h-16 object-cover border border-black grayscale">
                             @else
                                 <div class="w-16 h-16 bg-gray-200 border border-black flex items-center justify-center text-[8px]">
-                                    NO IMG</div>
+                                    NO IMG
+                                </div>
                             @endif
                         </td>
                         <td class="p-4 border-r-2 border-black font-bold">
@@ -44,7 +47,8 @@
                             </div>
                         </td>
                         <td class="p-4 border-r-2 border-black">
-                            <span class="px-2 py-1 text-[8px] border border-black {{ $project->category === 'professional' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700' }}">
+                            <span
+                                class="px-2 py-1 text-[8px] border border-black {{ $project->category === 'professional' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700' }}">
                                 {{ $project->category }}
                             </span>
                         </td>

@@ -44,8 +44,18 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            $path = $request->file('thumbnail')->store('projects', 'public');
-            $validated['thumbnail'] = $path;
+            $file = $request->file('thumbnail');
+
+            $uploadPath = dirname(base_path()) . '/uploads/projects';
+
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            $filename = uniqid() . '_' . $file->getClientOriginalName();
+            $file->move($uploadPath, $filename);
+
+            $validated['thumbnail'] = 'uploads/projects/' . $filename;
         }
 
         if (!empty($validated['tags'])) {
@@ -56,7 +66,9 @@ class ProjectController extends Controller
 
         Project::create($validated);
 
-        return redirect()->route('admin.project.index')->with('success', 'Project created successfully.');
+        return redirect()
+            ->route('admin.project.index')
+            ->with('success', 'Project created successfully.');
     }
 
     /**
