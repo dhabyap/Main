@@ -145,8 +145,11 @@
         @forelse($projects as $project)
             <a href="{{ route('project.show', $project->slug) }}"
                 class="group relative block w-full h-[55vh] md:h-[60vh] lg:h-[70vh] border-beam-b overflow-hidden cursor-pointer">
-                <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105"
-                    style="background-image: url('{{ filter_var($project->thumbnail, FILTER_VALIDATE_URL) ? $project->thumbnail : asset('storage/' . $project->thumbnail) }}');">
+                <div
+                    class="absolute inset-0 bg-cover bg-center transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-105"
+                    style="background-image: url('{{ filter_var($project->thumbnail, FILTER_VALIDATE_URL)
+                        ? $project->thumbnail
+                        : asset($project->thumbnail) }}');">
                 </div>
                 <div
                     class="absolute bottom-0 left-0 w-full lg:w-2/3 p-4 md:p-6 lg:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
