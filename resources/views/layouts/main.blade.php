@@ -125,6 +125,19 @@
             animation: marquee 20s linear infinite;
         }
 
+        /* Skeleton Loading */
+        .skeleton {
+            background-color: #e2e8f0;
+            background-image: linear-gradient(90deg, #e2e8f0 0px, #f1f5f9 40px, #e2e8f0 80px);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s infinite linear;
+        }
+
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
         @yield('extra_css')
     </style>
 </head>

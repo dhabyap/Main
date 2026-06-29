@@ -118,7 +118,6 @@
                 $latestBlogs = \App\Models\Blog::where('status', 'published')->orderBy('published_at', 'desc')->take(3)->get();
             @endphp
             @forelse($latestBlogs as $blog)
-                <div class="skeleton-loader animate-pulse bg-gray-300 dark:bg-gray-700 h-24 w-full"></div>
                 <a href="{{ route('blog.show', $blog->slug) }}"
                     class="p-8 hover:bg-[#FF3300] hover:text-white transition-colors group border-b-2 md:border-b-0 border-black dark:border-gray-700">
                     <span
@@ -126,7 +125,9 @@
                     <h3 class="text-xl font-bold uppercase tracking-tight">{{ $blog->title }}</h3>
                 </a>
             @empty
-                <div class="col-span-3 p-10 text-center opacity-50 italic">No articles published yet.</div>
+                <div class="p-8 skeleton h-32 w-full"></div>
+                <div class="p-8 skeleton h-32 w-full"></div>
+                <div class="p-8 skeleton h-32 w-full"></div>
             @endforelse
         </div>
     </section>
