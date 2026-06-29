@@ -1,13 +1,34 @@
 # Main Project
 
-This project is a portfolio application built with Laravel and Next.js.
+Portfolio / personal website built with **Laravel 10** (backend) + **TailwindCSS** UI.
+Features:
+- Hero section with dynamic data from `settings` table
+- Tech‑stack marquee
+- Services / capabilities grid
+- Project registry (grid of projects, dark theme, mint accent)
+- Blog listing with skeleton loading while data fetches
+- About & contact sections
+- Dark mode ready (Tailwind `dark` class)
 
-## Prerequisites
+Data source:
+- MySQL database `uhdqgfls_portofolio` (tables: `projects`, `blogs`, `services`, `settings`, …)
+- All content (titles, images, tags, etc.) pulled from DB via Eloquent models.
 
-- PHP 8.2+
-- Composer
-- Node.js & NPM
-- MySQL
+UI style:
+- Dark background (`#1A1A1A`) with mint‑orange highlights (`#FF3300`).
+- Custom “beam” borders, grain noise overlay, and skeleton shimmer.
+- Responsive grid (mobile → tablet → desktop) built with Tailwind utilities.
+- Accessible navigation (fixed navbar, mobile slide‑in menu).
+
+Deploy steps (shared hosting):
+1. Upload project files **above** `public_html`.
+2. Move `public/` contents to `public_html/`.
+3. Adjust `public_html/index.php` paths.
+4. Create `.env` on server, set `APP_ENV=production`, `APP_DEBUG=false`,
+   and DB credentials for the hosted MySQL.
+5. Run `php artisan migrate` on server (via SSH or hosting console).
+6. Run `npm run build` locally, then upload the generated `public/build/` folder.
+7. Set proper permissions on `storage/` & `bootstrap/cache/`.
 
 ## Local Setup
 
@@ -49,11 +70,3 @@ This project is a portfolio application built with Laravel and Next.js.
    ```bash
    php artisan serve
    ```
-
-## Shared Hosting Deployment
-
-1. **Upload Files**: Upload project files to your server (above `public_html`).
-2. **Public Folder**: Move contents of `public/` to `public_html/`.
-3. **Index.php**: Update the `require` paths in `public_html/index.php` to point to the project root.
-4. **Environment**: Create a `.env` file on the server with `APP_ENV=production` and `APP_DEBUG=false`.
-5. **Permissions**: Set 775 permissions for `storage/` and `bootstrap/cache/`.
