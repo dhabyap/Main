@@ -118,8 +118,9 @@
                 $latestBlogs = \App\Models\Blog::where('status', 'published')->orderBy('published_at', 'desc')->take(3)->get();
             @endphp
             @forelse($latestBlogs as $blog)
+                <div class="skeleton-loader animate-pulse bg-gray-300 dark:bg-gray-700 h-24 w-full"></div>
                 <a href="{{ route('blog.show', $blog->slug) }}"
-                    class="p-8 hover:bg-[#FF3300] hover:text-white transition-colors group border-b-2 md:border-b-0 border-black">
+                    class="p-8 hover:bg-[#FF3300] hover:text-white transition-colors group border-b-2 md:border-b-0 border-black dark:border-gray-700">
                     <span
                         class="font-tech text-[10px] uppercase mb-2 block opacity-70 group-hover:opacity-100">{{ $blog->published_at->format('d M Y') }}</span>
                     <h3 class="text-xl font-bold uppercase tracking-tight">{{ $blog->title }}</h3>
