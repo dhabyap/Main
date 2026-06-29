@@ -1,0 +1,1 @@
+<div class="animate-pulse bg-gray-300 h-full w-full"></div>
