@@ -155,6 +155,7 @@ return array(
     'Database\\Seeders\\BlogSeeder' => $baseDir . '/database/seeders/BlogSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\LandingPageSeeder' => $baseDir . '/database/seeders/LandingPageSeeder.php',
+    'Database\\Seeders\\PortfolioSeeder' => $baseDir . '/database/seeders/PortfolioSeeder.php',
     'Database\\Seeders\\ProjectSeeder' => $baseDir . '/database/seeders/ProjectSeeder.php',
     'Database\\Seeders\\ServiceSeeder' => $baseDir . '/database/seeders/ServiceSeeder.php',
     'Database\\Seeders\\SettingSeeder' => $baseDir . '/database/seeders/SettingSeeder.php',

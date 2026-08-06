@@ -19,3 +19,4 @@ user.ini
 Thumbs.db
 .DS_Store
 issues.md
+.env
