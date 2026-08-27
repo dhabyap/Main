@@ -31,8 +31,10 @@
                     <ul class="uppercase font-bold text-sm leading-relaxed space-y-2">
                         <li><a href="https://www.linkedin.com/in/dhaby-anggika-putra-74371b225/" target="_blank"
                                 class="hover:text-[#FF3300]">LinkedIn</a></li>
-                        <li><a href="#" class="hover:text-[#FF3300]">GitHub</a></li>
-                        <li><a href="#" class="hover:text-[#FF3300]">GitLab</a></li>
+                        <li><a href="https://github.com/dhabyap" target="_blank"
+                                class="hover:text-[#FF3300]">GitHub</a></li>
+                        <li><a href="https://t.me/byb0x_AlphaLab" target="_blank"
+                                class="hover:text-[#0088cc]">Telegram</a></li>
                     </ul>
                 </div>
             </div>
